@@ -11,27 +11,27 @@ public:
 		this->next=NULL;
 	}
 
-	// ~Node()
-	// {
-	// 	int value=this->data;
-	// 	this->data=NULL;
-	// 	if(this->next!= NULL)
-	// 	{
-	// 		delete next;
-	// 		next=NULL;
-	// 	}
-	//	cout<<"memory freed is "<<value<<endl;
-//
+	 ~Node()
+	 {
+	 	int value=this->data;
+		if(this->next!= NULL)
+	 	{
+	 		delete next;
+	 		next=NULL;
+	 	}
+		cout<<"memory freed is "<<value<<endl;
+	}
 };
 
-void insertAtNode(Node* &tail,int d,int element)
+//insertion of data
+void insertAtNode(Node* &tail,int element,int d)
 {
 	//.........FOR EMPTY LIST
 	if(tail==NULL)
 	{
-		Node* temp=new Node(d);
-		tail=temp;
-		temp->next=temp;
+		Node* new_node=new Node(d);
+		tail=new_node;
+		new_node->next=new_node;
 	}else 
 	{
 		Node* curr=tail;
@@ -52,6 +52,10 @@ void print(Node* &tail)
 {
 	Node* temp=tail;
 	//cout<<tail->data<<" ";
+	if(tail==NULL)
+	{
+		cout<<"list is empty";
+	}
 
 	do{
 		cout<<tail->data<<" ";
@@ -59,15 +63,58 @@ void print(Node* &tail)
 	}while(tail!=temp);
 	cout<<endl;
 }
+
+//for deleting any node
+void todeletion(Node* &tail,int d)
+{
+	//NULL CASE
+	if(tail == NULL)
+	{
+		cout<<"THE LIST IS EMPTY";
+		return;
+	}
+	else
+	{
+		//linked list containing any element
+		Node* prev=tail;
+		Node* curr=prev->next;
+		while(curr->data!=d)
+		{
+			prev=curr;
+			curr=curr->next;
+		}
+		prev->next=curr->next;
+		//for 1 linked list
+		if(tail==curr)
+		{
+			tail=NULL;
+		}
+		//for greater than 2 linked list
+		if(tail==curr)
+		{
+			tail=prev;
+		}
+		curr->next=NULL;
+		delete curr;
+	}
+}
 int main()
 {
 	Node* tail= NULL;
 
-	insertAtNode(tail,5,1);
+	insertAtNode(tail,5,3);
 	print(tail);
-	insertAtNode(tail,19,2);
+	insertAtNode(tail,3,5);
 	print(tail);
-	insertAtNode(tail,65,3);
+	insertAtNode(tail,5,7);
 	print(tail);
-	return 0;
+	insertAtNode(tail,7,8);
+	print(tail);
+	insertAtNode(tail,3,4);
+	print(tail);
+	insertAtNode(tail,5,6);
+	print(tail);
+	todeletion(tail,8);
+	print(tail);
+	//return 0;
 }
